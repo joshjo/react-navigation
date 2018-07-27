@@ -250,6 +250,16 @@ class TabBarBottom extends React.PureComponent {
               outputRange: outputRange,
             });
 
+            let focusStyle = {}
+            if (focused) {
+              focusStyle = {
+                shadowOffset:{ width: 0, height: 0, },
+                shadowColor: 'black',
+                shadowOpacity: 0.35,
+                shadowRadius: 1.5,
+              }
+            }
+
             const justifyContent = this.props.showIcon ? 'flex-end' : 'center';
             const extraProps = this._renderTestIDProps(scene) || {};
             const { testID, accessibilityLabel } = extraProps;
@@ -270,20 +280,34 @@ class TabBarBottom extends React.PureComponent {
                     : this._handleTabPress(index)
                 }
               >
-                <Animated.View style={[styles.tab, { backgroundColor }]}>
-                  <View
-                    style={[
-                      styles.tab,
-                      this._shouldUseHorizontalTabs()
-                        ? styles.tabLandscape
-                        : styles.tabPortrait,
-                      tabStyle,
-                    ]}
-                  >
-                    {this._renderIcon(scene)}
-                    {this._renderLabel(scene)}
+                <View style={{
+                  flex: 1,
+                  paddingHorizontal: 2,
+                 }}>
+                  <View style={{
+                    flex: 1,
+                    ...focusStyle,
+                   }}>
+
+                    <Animated.View style={[styles.tab, {
+                      backgroundColor,
+                    }]}>
+                      <View
+                        style={[
+                          styles.tab,
+                          this._shouldUseHorizontalTabs()
+                            ? styles.tabLandscape
+                            : styles.tabPortrait,
+                          tabStyle,
+                        ]}
+                      >
+                        {this._renderIcon(scene)}
+                        {this._renderLabel(scene)}
+                      </View>
+                    </Animated.View>
+
                   </View>
-                </Animated.View>
+                </View>
               </TouchableWithoutFeedback>
             );
           })}
