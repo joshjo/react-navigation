@@ -23,6 +23,8 @@ export default class TabBarTop extends React.PureComponent {
       showLabel,
       upperCaseLabel,
       labelStyle,
+      labelInactiveStyle,
+      labelActiveStyle,
       allowFontScaling,
     } = this.props;
     if (showLabel === false) {
@@ -40,12 +42,20 @@ export default class TabBarTop extends React.PureComponent {
       outputRange: outputRange,
     });
 
+    let localStyle = labelStyle;
+
     const tintColor = scene.focused ? activeTintColor : inactiveTintColor;
     const label = this.props.getLabel({ ...scene, tintColor });
+
+    if (scene.focused && labelActiveStyle !== undefined) {
+      localStyle = labelActiveStyle;
+    } else if (labelInactiveStyle !== undefined) {
+      localStyle = labelInactiveStyle;
+    }
     if (typeof label === 'string') {
       return (
         <Animated.Text
-          style={[styles.label, { color }, labelStyle]}
+          style={[styles.label, { color }, localStyle]}
           allowFontScaling={allowFontScaling}
         >
           {upperCaseLabel ? label.toUpperCase() : label}
