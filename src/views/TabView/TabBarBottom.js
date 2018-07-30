@@ -211,6 +211,7 @@ class TabBarBottom extends React.PureComponent {
       getTestIDProps,
       activeBackgroundColor,
       inactiveBackgroundColor,
+      activeViewProps,
       style,
       animateStyle,
       tabStyle,
@@ -251,15 +252,9 @@ class TabBarBottom extends React.PureComponent {
             });
 
             let focusStyle = {}
-            if (focused) {
-              focusStyle = {
-                shadowOffset:{ width: 0, height: 0, },
-                shadowColor: 'black',
-                shadowOpacity: 0.35,
-                shadowRadius: 1.5,
-              }
+            if (focused && activeViewProps) {
+              focusStyle = activeViewProps;
             }
-
             const justifyContent = this.props.showIcon ? 'flex-end' : 'center';
             const extraProps = this._renderTestIDProps(scene) || {};
             const { testID, accessibilityLabel } = extraProps;
